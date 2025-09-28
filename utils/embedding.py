@@ -11,21 +11,14 @@ load_dotenv()
 
 API_KEY = os.getenv('OPENAI_API_KEY')
 
-# 輸入的原始 .jsonl 檔案路徑
-INPUT_FILE_PATH = "D:\Files\\3.Coding\Python\AnHengHealthAppAI\data\medicine_completion_test.jsonl"
+INPUT_FILE_PATH = "../data/medicine_completion.jsonl"  # 測試的時候可以用 medicine_completion_test.jsonl
 
-# 處理完後要輸出的 .jsonl 檔案路徑
-# **建議使用與輸入不同的檔名，避免覆蓋原始檔案**
 OUTPUT_FILE_PATH = "../data/medicine_with_embeddings.jsonl"
 
-# 要使用的 Embedding 模型
 EMBEDDING_MODEL = "text-embedding-3-small"
 
-# 每次送出給 API 處理的資料筆數 (Batch Size)
 BATCH_SIZE = 500
 
-
-# --- 2. 主程式邏輯 ---
 
 def get_embeddings_in_batches(client, texts, model, batch_size):
     """
@@ -47,16 +40,12 @@ def get_embeddings_in_batches(client, texts, model, batch_size):
 
 
 def main():
-    """
-    主執行函式
-    """
     print("--- 開始前處理腳本 (JSONL 版本) ---")
 
     if not API_KEY:
         raise ValueError("OpenAI API 金鑰未設定，請在腳本中或環境變數中設定 API_KEY。")
     client = OpenAI(api_key=API_KEY)
 
-    # --- 主要修改：讀取 .jsonl 檔案 ---
     try:
         print(f"正在從 {INPUT_FILE_PATH} 讀取資料...")
         with open(INPUT_FILE_PATH, 'r', encoding='utf-8') as f:
@@ -71,7 +60,6 @@ def main():
     except json.JSONDecodeError as e:
         print(f"錯誤：解析 JSONL 檔案時發生錯誤。請檢查檔案格式是否正確，每一行都應為一個獨立的 JSON 物件。錯誤訊息: {e}")
         return
-    # --- 修改結束 ---
 
     df.dropna(subset=['medicine', 'completion'], inplace=True)
     df.reset_index(drop=True, inplace=True)
