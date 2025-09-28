@@ -13,18 +13,13 @@ class MessagePayload(BaseModel):
 
 router = APIRouter()
 
+
 async def get_ai_reply(payload: MessagePayload):
     embedding_service = EmbeddingService()
     embedding_controller = EmbeddingController(embedding_service)
     llm = LLM()
     pipeline = Pipeline(embedding_controller, embedding_service, llm)
     return pipeline.call_pipeline(payload.message)
-
-
-@router.get(path="/chat/ai", tags=["ai"])
-async def get_chat_to_ai(payload: MessagePayload):
-    content = await get_ai_reply(payload)
-    return {"response": content}
 
 
 @router.post(path="/chat/ai", tags=["ai"])
