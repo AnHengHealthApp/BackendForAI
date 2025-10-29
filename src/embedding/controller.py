@@ -1,12 +1,9 @@
 class EmbeddingController:
-    """embedding 控制器，負責處理 user 回應並呼叫 embedding 服務"""
-
     def __init__(self, embedding_service):
         self.similarity_threshold = 0
         self.embedding_service = embedding_service
 
     def data_search(self, user_question):
-        """搜尋用戶提問並回應"""
         results = []
         user_question = "".join(user_question)
 

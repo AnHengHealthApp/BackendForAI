@@ -10,7 +10,6 @@ load_dotenv()
 
 
 class EmbeddingService:
-
     def __init__(self):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
@@ -32,11 +31,9 @@ class EmbeddingService:
         return embedding
 
     def get_embedding(self, text, model="text-embedding-3-small"):
-        """取得文字的embedding"""
         return self.client.embeddings.create(input=[text], model=model).data[0].embedding
 
     def search_docs(self, user_query, top_n=3):
-        """搜尋用戶提問並回應"""
         embedding_user = self.get_embedding(user_query)
 
         self.df["similarities"] = self.df.embedding.apply(lambda x: self.cosine_similarity(x, embedding_user))

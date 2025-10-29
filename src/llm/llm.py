@@ -10,7 +10,6 @@ class LLM:
 
     @staticmethod
     def _load_system_prompt() -> str:
-        """使用絕對路徑安全地載入系統提示詞檔案。"""
         base_dir = os.path.dirname(os.path.abspath(__file__))
         prompt_path = os.path.join(base_dir, '..', '..', 'res', 'prompt.txt')
 

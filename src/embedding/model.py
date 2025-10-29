@@ -37,11 +37,10 @@ class OpenAIModel(EmbeddingModel):
         self.client = OpenAI(api_key=api_key)
 
     def encode(self, texts: list[str]) -> np.ndarray:
-        """透過 API 呼叫 OpenAI 並取得嵌入向量。"""
+        """透過 API 呼叫 OpenAI 並取得 embedding vector。"""
         if not texts:
             return np.array([])
 
-        # 將換行符替換為空格，這是 OpenAI 建議的做法
         texts = [t.replace("\n", " ") for t in texts]
 
         response = self.client.embeddings.create(
