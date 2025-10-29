@@ -64,13 +64,13 @@ This backend is based on the OpenAI API using Python.
         * Using `uv`:
 
            ```shell
-           uv run python utils/embedding.py
+           uv run python utils/init_chroma_db.py
            ```
 
         * Using Python's built-in `venv`:
 
             ```shell
-            python utils/embedding.py
+            python utils/init_chroma_db.py
             ```
 
 ## Run the Project
